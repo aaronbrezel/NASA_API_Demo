@@ -1,0 +1,25 @@
+NASA API Profile
+
+Short Summary of what the API does. What Information does it provide? Are there any restrictions?
+
+
+NASA maintins a growing list APIs that give developers access to a wide variety of agency data.
+The information accessable through these APIs range from an archive of exoplanets to outer space weather forecasts.
+For the purpose of these   
+
+
+The NASA API makes 
+
+There is an hourly limit of 1,000 requests per hour with a unique API. Requests are tracked by API key
+and apply to all NASA api requests. Key will be temporarily blocked. Requests apply until an hour after
+the request has been made. For example if you make 100 requests at 10:15 a.m. and 900 requests at 10:30, your API key will
+be prevented from making any more requests until 11:15, when you now make 100 more requests  
+If you require more requests than that an hour, you can contact Jason Duley at jason.duley@nasa.gov
+to request a higher rate limit. 
+
+Anyone is allowed to use the DEMO API Key: "NNKOjkoul8n1CH18TWA9gwngW1s1SmjESPjNoUFo"
+****Check to see if this works****
+This allow you to explore the API. However there is a severe request limit. 
+IP addresses using the Demo key are limited to just 30 requests per hour and 50 total requests per day
+If you plan on working with the NASA API, it is advisable to sign up for your own API Key
+
