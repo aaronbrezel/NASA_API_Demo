@@ -3,12 +3,12 @@ NASA API Profile
 
 
 NASA's APIs give developers access to a wide variety of agency data. The information
-accessable through these APIs range from an archive of exoplanet data to outer space weather
+accessible through these APIs range from an archive of exoplanet data to outer space weather
 forecasts. For the purpose of this demo, I have focused on the "Mars Rover Images" API, 
-which makes image data from NASA's Curiosity, Opportunity, and Spirit rovers avaliable. 
+which makes image data from NASA's Curiosity, Opportunity, and Spirit rovers available. 
 
 NASA encourages contributions to its growing list of APIs.
-The Mars Rover Photo API was built by Chris Cerami, an independant developer. Cerami 
+The Mars Rover Photo API was built by Chris Cerami, an independent developer. Cerami 
 continues to maintain the API, as well. Further inquiries should be directed to 
 chrisccerami@gmail.com via email or on Twitter at @chrisccerami.   
 
@@ -19,13 +19,13 @@ Step 1: Get your unique API key
 	Most API's require developers to apply for a unique key. This key is a password of
 	sorts for the API and allows the host, to track data usage. To get a NASA API key,
  	Navigate to https://api.nasa.gov/index.html. Scroll down to the "Get Your API Key"
-	header and fill out the form. You should immediately recieve a unique key consisting
-	of a string of letters and numbrs. Save this string.
+	header and fill out the form. You should immediately receive a unique key consisting
+	of a string of letters and numbers. Save this string.
 Step 2: Navigate to https://api.nasa.gov/api.html#MarsPhotos
 	You can navigate to the Mars Rover Photos API from the NASA API homepage, but I
 	recommend using the link above as navigation on the site is a little wonky. Review
 	the types of rover cameras, what a Martian sol is, etc. There is going to be a lot
-	abbreviations in your data, so it helps to be knowlegeable. Try out some of the 
+	abbreviations in your data, so it helps to be knowledgeable. Try out some of the 
 	example queries 
 	(https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY)
 	You can swap out "DEMO_KEY" for your own API key and the url will return the same
@@ -33,7 +33,7 @@ Step 2: Navigate to https://api.nasa.gov/api.html#MarsPhotos
 	how an API key acts as a kind of password. Note the variables at play such as 
 	"sol=1000". Change "1000" to "900" and the url still provides information. That is 
 	the basis of how these API requests work. Change variables and the format of the url 
-	and you will recieve different bits of information.
+	and you will receive different bits of information.
 Step 3: Did something break?
 	Current documentation states that, in addition to photo information, you should also
 	be able to access manifests and latest photos for each rover. As of Feb. 2, 2019, I 
@@ -88,7 +88,7 @@ Each photo has a unique id. As it happens, Opportunity only took 26 photos on it
 camera on June 3, 2015. Therefore, only one photo is returned on the proverbial second page.
 Each photo contains a small package of photo-specific data and data about the rover. That
 includes how many days the rover had been on Mars before the photo was taken (4037). You also
-recieve a url of where you can find the photo online. Feel free to view the photo, but it is
+receive a url of where you can find the photo online. Feel free to view the photo, but it is
 not that exciting. Finally, each package of photo data also includes information about the
 rover that took it. For example, the "launch_date" of the rover was July 7, 2003. The 
 "max_date," or last time photos were pinged back to Earth, is June 11, 2018. A day later, a
@@ -136,7 +136,7 @@ Limitations
 NASA's APIs and the data they provide are completely free for both private and comercial use.
 
 However, http requests from a API key are capped at 1,000  per hour. Once that number is
-exceeded requets using that API key are temporarily blocked. This cap extends across APIs. A
+Exceeded, requests using that API key are temporarily blocked. This cap extends across APIs. A
 single API key cannot make 500 requests from the Techport API and 600 requests from the
 GeneLab Search API in the same hour. 
   
@@ -151,10 +151,10 @@ higher rate limit for your API key.
 Process Log
 
 1. My starting point was https://api.nasa.gov/index.html
-2. I worked my way down this page, reading up on the API and signing up for a API Key. I stored that API Key in a seperate file from NASA_API_Demo.py
+2. I worked my way down this page, reading up on the API and signing up for a API Key. I stored that API Key in a separate file from NASA_API_Demo.py
 3. Near the bottom of the page, underneath the "Authentication," are the next set of directions for using your API Key. In short, they tell you to click on a hyperlink and go to this page: https://api.nasa.gov/api.html#authentication Not the smoothest UI experience, but it's no problem. 
-4. Once on this page, I read up on the API key request limit. I then tested out queries for the different API's. Luckly there is not much documentation other than showing the url requests. There is plenty of room for expanding on how to effectively use these requests in python.  
-5. I settled on the Mars Rover API. Under that API's heading, I found a link to Chris Cerami's github page https://github.com/chrisccerami/mars-photo-api, which has more info on how to use his api. I primarily used the API documentation on Cerami's github page to guide my exploration. I also lifted (with citation) his table listing the different cameras on each rover for my own API documentation. 
+4. Once on this page, I read up on the API key request limit. I then tested out queries for the different API's. Luckily there is not much documentation other than showing the url requests. There is plenty of room for expanding on how to effectively use these requests in python.  
+5. I settled on the Mars Rover API. Under that API's heading, I found a link to Chris Cerami's GitHub page https://github.com/chrisccerami/mars-photo-api, which has more info on how to use his API. I primarily used the API documentation on Cerami's GitHub page to guide my exploration. 
 6. I played around with several different API calls.  
-7. I came to an issue where some of the queries in the initial documentation do not work anymore. I left a issue post on Cerami's github repository. https://github.com/chrisccerami/mars-photo-api/issues/82
-8. I started writing up the documentation. As a matter of small interest, while writing up query 1, I noticed that Opportunity last ping date was June 11, 2018. That is the a day before dust storm forced the rover into hibernation. NASA has not been able to reestablish contact, since. 
+7. I came to an issue where some of the queries in the initial documentation do not work anymore. I left a issue post on Cerami's GitHub repository. https://github.com/chrisccerami/mars-photo-api/issues/82
+8. I started writing up the documentation. As a matter of small interest, while writing up query 1, I noticed that Opportunity last ping date was June 11, 2018. That is the a day before dust storm forced the rover into hibernation. NASA has not been able to reestablish contact, since.
