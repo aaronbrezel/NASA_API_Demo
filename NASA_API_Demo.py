@@ -7,8 +7,7 @@ import requests
 base_url = "https://api.nasa.gov/mars-photos/api/v1/rovers/"
 
 
-def api_Request():
-    return "Hello World"
+
 
 
 
