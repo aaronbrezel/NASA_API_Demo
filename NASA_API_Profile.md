@@ -1,21 +1,21 @@
 # NASA API Profile
 
-NASA's APIs give developers access to a wide variety of agency data. The information accessible through these APIs range from an archive of exoplanet data to outer space weather forecasts. For the purpose of this demo, I have focused on the "Mars Rover Images" API, which makes image data from NASA's Curiosity, Opportunity, and Spirit rovers available. 
+NASA's APIs give developers access to a wide variety of agency data. The information accessible through these APIs range from an archive of exoplanet data to outer space weather forecasts. For the purpose of this demo, I have focused on the "Mars Rover Images" API, which makes available image data from NASA's Curiosity, Opportunity, and Spirit rovers. 
 
 For access to all of NASA's APIs, visit https://api.nasa.gov/index.html. 
 
 The Mars Rover Photo API was built and is maintained by Chris Cerami, an independent developer. In-depth inquiries should be directed to Cerami at chrisccerami@gmail.com or via Twitter at @chrisccerami. NASA encourages contributions to its growing list of APIs.   
-
+Check out NASA_API_Demo.py in this Github repo for a companion tutorial on how to make requests to this API using python.
 
 ## Setup
 
 ### Step 1: Get your unique API key
 
-Most API's require developers to apply for a unique key. This key is a password of sorts for the API and allows the host, to track data usage. To get a NASA API key, navigate to https://api.nasa.gov/index.html if you haven't already. Scroll down to the "Get Your API Key" header and fill out the form. You should immediately receive a unique key consisting of a string of letters and numbers. **Save this string**.
+Most API's require developers to apply for a unique key. This key is a password of sorts for the API and allows NASA to track data usage. To get a NASA API key, navigate to https://api.nasa.gov/index.html if you haven't already. Scroll down to the "Get Your API Key" header and fill out the form. You should immediately receive a unique key consisting of a string of letters and numbers. **Save this string**.
 
 ### Step 2: Navigate to Mars photos API page
 
-Navigate to the Mars Rover Photos API using this URL: https://api.nasa.gov/api.html#MarsPhotos. You *can* get to this page from the NASA API homepage where you got your key, but I recommend using the link above as navigation on the site is a little wonky.
+Navigate to the Mars Rover Photos API using this URL: https://api.nasa.gov/api.html#MarsPhotos. You *can* get to this page from the NASA API homepage where you got your key, but I recommend using the link above as navigation on the site is a little wonky. Here you will find a brief tutorial on the purpose of the API and how to use it. Cerami also wrote his own tutorial that you can find on his personal Github page here: https://github.com/chrisccerami/mars-photo-api
 
 #### A quick aside about APIs
 
@@ -40,19 +40,38 @@ Current documentation states that, in addition to photo information, you should 
 
 When building a url for this API, there are three categories of variables:
 	
-### 1. Rover: Curiosity, Opportunity, Spirit  
+### 1. Rovers: Curiosity, Opportunity, Spirit  
 
-When searching for photos, you must limit your search by rover. 
+When searching for photos, you must limit your search to one of the three available rovers.
 
 ex: *.../rovers/curiosity/photos?...*
 
 ex: *.../rovers/opportunity/photos?...*
 
+ex: *.../rovers/spirit/photos?...*
+
 ### 2. Filter: Earth day, Martian sol, Camera type  
 
-After selecting a rover, you can filter the photo results based on these three variables. You must include at least one of these filters. Earth day represents the day on earth the photo was taken. Earth day and Martian sol can be used in tandem with Camera type, but Earth day and Martian sol cannot be used together. Earth day should be added with a YYYY-MM-DD format and Martian sol represents a number 0 to the total number of days a rover has been on Mars. Review camera types on the official Mars rover API page.  
+After selecting a rover, you can filter the photo results based on these three variables. You **must** include at least one of these filters. Earth day represents the day on earth the photo was taken. Earth day and Martian sol can be used in tandem with Camera type, but Earth day and Martian sol cannot be used together. Earth day should be added with a YYYY-MM-DD format and Martian sol represents a number 0 to the total number of days a rover has been on Mars. Camera allows you to select photos from specific cameras on each rover. Leaving the camera variable blank will return photos from every camera on the rover. 
 
-ex: *.../photos?sol=1000&api_key=API_key * 
+Cerami assembled a table to list which cameras are mounted on each rover. Use this table as a reference for effecively using the API. When you are ready to send a query, use the abbreviation of a camera to select it. i.e. *.../photos?camera=mardi&api_key=API_key*
+
+  Abbreviation | Camera                         | Curiosity | Opportunity | Spirit
+  ------------ | ------------------------------ | --------  | ----------- | ------ |
+   FHAZ|Front Hazard Avoidance Camera|✔|✔|✔|
+   RHAZ|Rear Hazard Avoidance Camera|✔|✔|✔|
+   MAST|Mast Camera| ✔|
+   CHEMCAM|Chemistry and Camera Complex  | ✔| 
+   MAHLI|Mars Hand Lens Imager|✔| 
+   MARDI|Mars Descent Imager|✔|
+   NAVCAM|Navigation Camera|✔|✔|✔|
+   PANCAM|Panoramic Camera|-|✔|✔|
+   MINITES|Miniature Thermal Emission Spectrometer (Mini-TES)|-|✔|✔|
+
+#### How to learn a rover's functioning lifespan:
+When selecting Earth date or Martian Sol, your query will **only** return photos if your dates are within the rover's functioning lifespan. If the rover manifest feature of this API was functional, this would be easy information to find. However, you can still find a rover's operating range without it. Run any simple photo query for any rover in your browser. https://api.nasa.gov/mars-photos/api/v1/rovers/Opportunity/photos?sol=3&page=1&api_key=DEMO_KEY works well. CTRL-F "landing_date" in the resulting json text and you will see the first Earth date a rover was on Mars. Do the same for "max_date" and "max_sol" and you will see the maximum Earth date and maximum sol you can input.
+
+ex: *.../photos?sol=1000&api_key=API_key* 
 
 ex: *.../photos?earth_date=2016-5-25&camera=fhaz&api_key=API_key*   
 
@@ -82,9 +101,7 @@ ex: *.../photos?sol=1000&page=2&api_key=API_key*
 
 **Explaination:** 
 
-Each photo has a unique id. As it happens, Opportunity only took 26 photos on it's panoramic camera on June 3, 2015. Therefore, only one photo is returned on the proverbial second page.
-Each photo contains a small package of photo-specific data and data about the rover. That includes how many days the rover had been on Mars before the photo was taken (4037). You also
-receive a url of where you can find the photo online. Feel free to view the photo, but it is not that exciting (other than the fact it was taken on a different planet). Finally, each package of photo data also includes information about the rover that took it. For example, the "launch_date" of the rover was July 7, 2003. The "max_date," or last time photos were pinged back to Earth, is June 11, 2018. A day later, a dust storm forced Opportunity into hibernation. NASA has not been able to reestablish contact, since.
+Each photo has a unique id. As it happens, Opportunity only took 26 photos on it's panoramic camera on June 3, 2015. Therefore, only one photo is returned on the proverbial second page. Each photo contains a small package of photo-specific data and data about the rover. That includes how many days the rover had been on Mars before the photo was taken (4037). You also receive a url of where you can find the photo online. Feel free to view the photo, but it is not that exciting (other than the fact it was taken on a different planet). Finally, each package of photo data also includes information about the rover that took it. For example, the "launch_date" of the rover was July 7, 2003. The "max_date," or last time photos were pinged back to Earth, is June 11, 2018. A day later, a dust storm forced Opportunity into hibernation. NASA has not been able to reestablish contact, since. Nasa officially retired Opportunity on Feburary 13, 2019 after 5,352 sols, over 14 Earth years on the Martian surface. 
 
 ### Query 2
 **url:** https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=1&api_key=API_key
@@ -105,9 +122,7 @@ receive a url of where you can find the photo online. Feel free to view the phot
 **Explaination:**
 
 
-Above is a small snippet of the json object returned by this API request. The data format is
-the same as the previous query. This is an interesting query to run if you want to see the
-first photos the Spirit rover took on Mars.
+Above is a small snippet of the json object returned by this API request. The data format is the same as the previous query. This is an interesting query to run if you want to see the first photos the Spirit rover took on Mars.
 
 ### Query 3
 **url:** https://api.nasa.gov/mars-photos/api/v1/rovers/spirit/photos?sol=1&page=5&api_key=API_key
@@ -133,13 +148,9 @@ Don't be shocked. What this result tells you is that the Spirit rover did not ta
 
 NASA's APIs and the data they provide are completely free for both private and comercial use.
 
-However, http requests from a single API key are capped at 1,000  per hour. Once that number 
-is exceeded, requests using that API key are temporarily blocked. As long as you use the
-same API key, this limit extends across APIs. You cannot make 500 requests from the Techport
-API and 600 requests from the GeneLab Search API in the same hour using your same API key. 
+However, http requests from a single API key are capped at 1,000  per hour. Once that number is exceeded, requests using that API key are temporarily blocked. As long as you use the same API key, this limit extends across APIs. You cannot make 500 requests from the [Techport API](https://api.nasa.gov/api.html#genelab) and 600 requests from the [GeneLab Search API](https://api.nasa.gov/api.html#genelab) in the same hour using your same API key. 
   
-The http request counter resets on a rolling basis. If you make 100 requests at 10:15 a.m. 
-and 900 requests at 10:30 a.m., your API key will be prevented from making any more 
+The http request counter resets on a rolling basis. If you make 100 requests at 10:15 a.m. and 900 requests at 10:30 a.m., your API key will be prevented from making any more 
 requests until 11:15. Now, you can make 100 more requests. If you require more than 1000 
 requests per hour, you can contact Jason Duley at jason.duley@nasa.gov to request a 
 higher rate limit for your API key. 
